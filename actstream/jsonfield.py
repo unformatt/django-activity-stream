@@ -32,7 +32,8 @@ DataField = models.TextField
 
 if USE_JSONFIELD:
     try:
-        from jsonfield_compat import JSONField, register_app
+        #from jsonfield_compat import JSONField, register_app
+        from jsonfield import JSONField # Using https://github.com/rpkilby/jsonfield/releases/tag/2.0.2
         DataField = JSONField
     except ImportError as err:
         try:
