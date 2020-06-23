@@ -14,6 +14,7 @@ however that field will be removed by migration 0002 directly
 afterwards.
 
 '''
+from __future__ import unicode_literals, absolute_import
 from django.db import models
 from django.core.exceptions import ImproperlyConfigured
 
@@ -31,19 +32,20 @@ def register_app(app):
 DataField = models.TextField
 
 if USE_JSONFIELD:
-    try:
-        #from jsonfield_compat import JSONField, register_app
-        from jsonfield import JSONField # Using https://github.com/rpkilby/jsonfield/releases/tag/2.0.2
-        DataField = JSONField
-    except ImportError as err:
-        try:
-            from django_mysql.models import JSONField
-            DataField = JSONField
+    from jsonfield import JSONField # Using https://github.com/rpkilby/jsonfield/releases/tag/2.0.2
+    DataField = JSONField
+    # try:
+    #     from jsonfield_compat import JSONField, register_app
+    #     DataField = JSONField
+    # except ImportError as err:
+    #     try:
+    #         from django_mysql.models import JSONField
+    #         DataField = JSONField
 
-        except ImportError:
-            raise ImproperlyConfigured(
-                'You must either install django-jsonfield + '
-                'django-jsonfield-compat, or django-mysql as an '
-                'alternative, if you wish to use a JSONField on your '
-                'actions'
-            )
+    #     except ImportError:
+    #         raise ImproperlyConfigured(
+    #             'You must either install django-jsonfield + '
+    #             'django-jsonfield-compat, or django-mysql as an '
+    #             'alternative, if you wish to use a JSONField on your '
+    #             'actions'
+    #         )
